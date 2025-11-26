@@ -1,0 +1,11 @@
+name,type,avg_cost,distance_km,open_hour,weather,travel_type,budget_level,short_description
+Central Museum,museum,50,1.2,9,sunny,solo,medium,A classic art & history museum.
+Riverside Park,park,0,0.5,6,sunny,family,low,Large green park with walking trails.
+Old Temple,temple,0,2.5,5,sunny,spiritual,low,Historic temple with morning rituals.
+Adventure Park,amusement,40,10,10,sunny,adventure,medium,Zipline and ropes for thrill-seekers.
+Botanical Garden,garden,15,3.2,8,sunny,family,low,Lush gardens and guided tours.
+Skyline Viewpoint,viewpoint,0,6.5,5,sunny,romantic,low,Panoramic city views at sunset.
+Heritage Walk,walk,0,0.8,7,sunny,solo,low,Self-guided walk through historical streets.
+Cooking Class,activity,60,4.5,16,cloudy,foodie,high,Hands-on local cuisine cooking.
+Artisan Market,shopping,20,1.0,10,sunny,family,low,Local crafts and street food.
+Rainforest Trail,hike,10,12,6,rainy,adventure,medium,A nature trail with canopy walk.

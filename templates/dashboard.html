@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Recommendation dashboard</h3>
+  <p>Use the form below to capture your current context; the recommender will return spots for you.</p>
+
+  <div>
+    <label>Preferred type</label>
+    <select id="type">
+      <option>park</option>
+      <option>museum</option>
+      <option>temple</option>
+      <option>amusement</option>
+      <option>garden</option>
+      <option>viewpoint</option>
+      <option>walk</option>
+      <option>activity</option>
+      <option>shopping</option>
+      <option>hike</option>
+    </select>
+
+    <label>Average budget per person (approx)</label>
+    <input id="avg_cost" type="number" value="10">
+
+    <label>Max distance (km)</label>
+    <input id="distance_km" type="number" value="5">
+
+    <label>Current weather</label>
+    <select id="weather">
+      <option>sunny</option>
+      <option>cloudy</option>
+      <option>rainy</option>
+    </select>
+
+    <label>Travel type</label>
+    <select id="travel_type">
+      <option>family</option>
+      <option>solo</option>
+      <option>adventure</option>
+      <option>romantic</option>
+      <option>spiritual</option>
+      <option>foodie</option>
+    </select>
+
+    <label>Budget level</label>
+    <select id="budget_level">
+      <option>low</option>
+      <option>medium</option>
+      <option>high</option>
+    </select>
+
+    <button class="btn" id="getRecs">Get Recommendations</button>
+  </div>
+
+  <div id="results" style="margin-top:12px;"></div>
+</div>
+{% endblock %}
