@@ -6,6 +6,7 @@ Jinja2==3.1.6
 SQLAlchemy==2.0.44
 pandas==2.3.3
 numpy==2.2.6
+Flask-Mail
 
 scikit-learn==1.7.2
 joblib==1.5.2
