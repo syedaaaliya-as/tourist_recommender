@@ -104,5 +104,24 @@ def api_recommend():
     results = recommender.recommend(context, top_k=5)
     return jsonify({"results": results})
 
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    if request.method == "POST":
+        email = request.form.get("email")
+
+        # Check if email exists in DB
+        user = db.query(User).filter(User.username == email).first()  # change to .email if you store email separately
+
+        if not user:
+            flash("No account found with this email / username", "error")
+            return redirect(url_for("forgot_password"))
+
+        # Here you would normally send an actual email
+        flash("Password reset link has been sent to your email.", "success")
+        return redirect(url_for("login"))
+
+    return render_template("forgot_password.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
