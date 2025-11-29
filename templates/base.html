@@ -5,39 +5,95 @@
   <meta charset="utf-8">
   <title>Tourist Recommender Prototype</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Leaflet (MAP) CSS -->
+  <link 
+    rel="stylesheet" 
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; max-width:900px; }
-    header { display:flex; justify-content:space-between; align-items:center; }
-    .card { border:1px solid #ddd; padding:16px; border-radius:8px; margin:12px 0; }
-    .btn { padding:8px 12px; border-radius:6px; text-decoration:none; background:#2d89ef; color:white; }
-    input, select { padding:8px; width:100%; margin:6px 0 12px 0; }
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 20px; 
+      max-width: 1000px;
+    }
+    header { 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      margin-bottom: 20px;
+    }
+    .card { 
+      border:1px solid #ddd; 
+      padding:16px; 
+      border-radius:8px; 
+      margin:12px 0; 
+      background: #fafafa;
+    }
+    .btn { 
+      padding:8px 12px; 
+      border-radius:6px; 
+      text-decoration:none; 
+      background:#2d89ef; 
+      color:white;
+      cursor: pointer;
+      border: none;
+    }
+    input, select { 
+      padding:8px; 
+      width:100%; 
+      margin:6px 0 12px 0; 
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+    #map {
+      width: 100%;
+      height: 350px;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <h2>Tourist Recommender</h2>
     <nav>
       {% if session.username %}
-        Hello, {{ session.username }} | <a href="{{ url_for('logout') }}">Logout</a>
+        Hello, {{ session.username }} |
+        <a href="{{ url_for('logout') }}">Logout</a>
       {% else %}
-        <a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a> |
+        <a href="{{ url_for('register') }}">Register</a>
       {% endif %}
     </nav>
   </header>
+
   <main>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div>
           {% for cat, msg in messages %}
-            <div style="padding:8px; margin:6px 0; border-radius:6px; background:#f0f0f0;">
+            <div style="padding:8px; margin:6px 0; border-radius:6px; background:#e7f0ff;">
               {{ msg }}
             </div>
           {% endfor %}
         </div>
       {% endif %}
     {% endwith %}
+
     {% block content %}{% endblock %}
   </main>
+
+  <!-- Leaflet JS (Map) -->
+  <script 
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <!-- Your main frontend logic -->
   <script src="{{ url_for('static', filename='app.js') }}"></script>
+
 </body>
 </html>

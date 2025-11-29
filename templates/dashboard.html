@@ -1,10 +1,22 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block content %}
-<div class="card">
-  <h3>Recommendation dashboard</h3>
-  <p>Use the form below to capture your current context; the recommender will return spots for you.</p>
 
-  <div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+
+<center>
+  <h3>Tourist Recommendation Dashboard</h3>
+
+  <div class="card">
+
+    <label>Country</label>
+    <select id="country"></select>
+
+    <label>State</label>
+    <select id="state"></select>
+
+    <label>City</label>
+    <select id="city"></select>
+
     <label>Preferred type</label>
     <select id="type">
       <option>park</option>
@@ -22,36 +34,98 @@
     <label>Average budget per person (approx)</label>
     <input id="avg_cost" type="number" value="10">
 
-    <label>Max distance (km)</label>
-    <input id="distance_km" type="number" value="5">
-
-    <label>Current weather</label>
+    <label>Weather</label>
     <select id="weather">
-      <option>sunny</option>
-      <option>cloudy</option>
-      <option>rainy</option>
+      <option value="sunny">Sunny</option>
+      <option value="rainy">Rainy</option>
+      <option value="cloudy">Cloudy</option>
+      <option value="snowy">Snowy</option>
     </select>
 
-    <label>Travel type</label>
+    <label>Travel Type</label>
     <select id="travel_type">
-      <option>family</option>
-      <option>solo</option>
-      <option>adventure</option>
-      <option>romantic</option>
-      <option>spiritual</option>
-      <option>foodie</option>
+      <option value="family">Family</option>
+      <option value="solo">Solo</option>
+      <option value="romantic">Romantic</option>
+      <option value="adventure">Adventure</option>
+      <option value="spiritual">Spiritual</option>
     </select>
 
-    <label>Budget level</label>
+    <label>Budget Level</label>
     <select id="budget_level">
-      <option>low</option>
-      <option>medium</option>
-      <option>high</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
     </select>
 
-    <button class="btn" id="getRecs">Get Recommendations</button>
+    <label>Travel Mode</label>
+    <select id="travel_mode">
+      <option value="bus">Bus</option>
+      <option value="train">Train</option>
+      <option value="plane">Plane</option>
+      <option value="cab">Cab</option>
+      <option value="metro">Metro</option>
+    </select>
+
+    <button class="btn" id="getRecs" style="margin-top:10px;">Get Recommendations</button>
+    <button class="btn" id="getTicket" style="background:#444;margin-top:10px;">Get Ticket Estimate</button>
+
   </div>
 
-  <div id="results" style="margin-top:12px;"></div>
-</div>
+  <h3>Results</h3>
+  <div id="results"></div>
+
+  <h3>Map</h3>
+  <div id="map" style="height:400px;"></div>
+</center>
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+<!-- 🚀 JS script start -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  let userLat = null, userLng = null;
+
+  // Request GPS access
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        console.log("User location:", userLat, userLng);
+      },
+      err => console.log("GPS access denied")
+    );
+  }
+
+  const btn = document.getElementById("getRecs");
+  
+  btn.addEventListener("click", function () {
+    const payload = {
+      country: document.getElementById("country").value,
+      state: document.getElementById("state").value,
+      city: document.getElementById("city").value,
+      type: document.getElementById("type").value,
+      avg_cost: Number(document.getElementById("avg_cost").value || 10),
+      distance_km: Number(document.getElementById("distance_km").value || 5),
+      open_hour: new Date().getHours(),
+      weather: document.getElementById("weather").value,
+      travel_type: document.getElementById("travel_type").value,
+      budget_level: document.getElementById("budget_level").value,
+      user_lat: userLat,
+      user_lng: userLng
+    };
+
+    fetch("/api/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then(r => r.json())
+      .then(data => console.log(data))
+      .catch(e => console.error("Error", e));
+  });
+});
+</script>
+
 {% endblock %}

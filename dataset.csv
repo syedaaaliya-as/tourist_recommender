@@ -1,11 +1,53 @@
-name,type,avg_cost,distance_km,open_hour,weather,travel_type,budget_level,short_description
-Central Museum,museum,50,1.2,9,sunny,solo,medium,A classic art & history museum.
-Riverside Park,park,0,0.5,6,sunny,family,low,Large green park with walking trails.
-Old Temple,temple,0,2.5,5,sunny,spiritual,low,Historic temple with morning rituals.
-Adventure Park,amusement,40,10,10,sunny,adventure,medium,Zipline and ropes for thrill-seekers.
-Botanical Garden,garden,15,3.2,8,sunny,family,low,Lush gardens and guided tours.
-Skyline Viewpoint,viewpoint,0,6.5,5,sunny,romantic,low,Panoramic city views at sunset.
-Heritage Walk,walk,0,0.8,7,sunny,solo,low,Self-guided walk through historical streets.
-Cooking Class,activity,60,4.5,16,cloudy,foodie,high,Hands-on local cuisine cooking.
-Artisan Market,shopping,20,1.0,10,sunny,family,low,Local crafts and street food.
-Rainforest Trail,hike,10,12,6,rainy,adventure,medium,A nature trail with canopy walk.
+name,type,avg_cost,open_hour,weather,short_description,country,state,city,lat,lng,travel_type,travel_options
+Lalbagh Botanical Garden,park,100,9,sunny,Historic botanical garden,India,Karnataka,Bengaluru,12.9507,77.5848,family,"bus,cab,metro"
+Cubbon Park,park,50,6,sunny,Large green space in center,India,Karnataka,Bengaluru,12.9763,77.5929,friends,"bus,metro"
+Bannerghatta National Park,park,300,9,sunny,Wildlife safari and zoo,India,Karnataka,Bengaluru,12.8000,77.5770,family,"bus,cab"
+ISKCON Temple,temple,0,6,any,Spiritual temple and prasadam,India,Karnataka,Bengaluru,13.0105,77.5510,family,"bus,metro,cab"
+MG Road,shopping,500,10,sunny,Shopping & nightlife street,India,Karnataka,Bengaluru,12.9732,77.6190,friends,"metro,cab"
+Commercial Street,shopping,600 ,10,sunny,Popular shopping for clothes & accessories,India,Karnataka,Bengaluru,12.9830,77.6051,friends,"bus,metro"
+Lumbini Gardens,park,200,9,cloudy,Waterfront amusement & boating,India,Karnataka,Bengaluru,13.0285,77.6276,family,"bus,cab"
+Vidhana Soudha,viewpoint,0,9,sunny,Assembly building architecture,India,Karnataka,Bengaluru,12.9796,77.5910,family,"bus,metro,cab"
+Wonderla Amusement Park,amusement,1200 ,11,sunny,Roller coasters & waterpark,India,Karnataka,Bengaluru,12.8344,77.4016,friends,"bus,cab"
+Lalitha Mahal Palace,viewpoint,100,9,sunny,Historic architectural hotel palace,India,Karnataka,Mysore,12.2958,76.6394,family,"bus,cab"
+Mysore Palace,viewpoint,100,10,sunny,Grand royal palace with lighting show,India,Karnataka,Mysore,12.3052,76.6552,family,"bus,cab"
+Brindavan Gardens,park,150,18,sunny,Musical fountain garden,India,Karnataka,Mysore,12.4212,76.5730,family,"bus,cab"
+St. Philomena’s Cathedral,temple,0 ,8,any,Neo-gothic historic church,India,Karnataka,Mysore,12.3173,76.6600,family,"bus,cab"
+Panambur Beach,viewpoint,50,9,cloudy,Most visited beach in Mangalore,India,Karnataka,Mangalore,12.9543,74.7924,friends,"bus,cab"
+Tannirbhavi Beach,viewpoint,50 ,9,cloudy,Peaceful beach with ferry access,India,Karnataka,Mangalore,12.8907,74.8143,friends,"bus,cab"
+Kadri Manjunath Temple,temple,0,6,any,Ancient Shiva temple,India,Karnataka,Mangalore,12.8943,74.8544,family,"bus,cab"
+City Centre Mall,shopping,500,10,sunny,Modern mall shopping experience,India,Karnataka,Mangalore,12.9102,74.8428,friends,"bus,cab"
+Charminar,viewpoint,50,9,sunny,Iconic minaret monument,India,Telangana,Hyderabad,17.3616,78.4747,family,"bus,metro,cab"
+Ramoji Film City,activity,1350 ,9,sunny,World’s largest film studio theme park,India,Telangana,Hyderabad,17.2543,78.6808,friends,"bus,cab"
+Golconda Fort,viewpoint,100 ,9,cloudy,Historic fortress with night show,India,Telangana,Hyderabad,17.3833,78.4011,family,"bus,cab"
+Hussain Sagar Lake,viewpoint,100,10,cloudy,Boating & city skyline views,India,Telangana,Hyderabad,17.4239,78.4738,friends,"bus,cab"
+India Gate,viewpoint,0,9,sunny,War memorial monument,India,Delhi,Delhi,28.6129,77.2295,family,"bus,metro"
+Red Fort,museum,250,9,sunny,UNESCO heritage fort,India,Delhi,Delhi,28.6562,77.2410,family,"bus,metro"
+Qutub Minar,viewpoint,250,9,sunny,Historic tower & museum,India,Delhi,Delhi,28.5244,77.1855,family,"bus,metro,cab"
+Lotus Temple,temple,0 ,9,any,Bahai house of worship,India,Delhi,Delhi,28.5535,77.2588,family,"bus,metro"
+Sarojini Nagar Market,shopping,600,10,sunny,Popular affordable street shopping,India,Delhi,Delhi,28.5755,77.1997,friends,"metro,cab"
+Marine Drive,viewpoint,0,10,cloudy,Coastal promenade,India,Maharashtra,Mumbai,18.9440,72.8239,friends,"train,bus,cab"
+Gateway of India,viewpoint,0 ,9,sunny,Colonial stone arch landmark,India,Maharashtra,Mumbai,18.9219,72.8345,family,"bus,boat,cab"
+Juhu Beach,viewpoint,0,10,cloudy,Famous beach + food stalls,India,Maharashtra,Mumbai,19.0988,72.8260,friends,"bus,cab"
+Statue of Liberty,viewpoint,2000,8,sunny,Iconic statue & ferry ride,United States,New York,New York,40.6892,-74.0445,family,"boat,bus,cab"
+Central Park,park,0 ,6,cloudy,Huge city park with lakes & trails,United States,New York,New York,40.7851,-73.9683,friends,"bus,metro,cab"
+Times Square,shopping,1500 ,10,sunny,Shopping & digital billboards hub,United States,New York,New York,40.7580,-73.9855,friends,"metro,cab"
+Brooklyn Bridge,viewpoint,0 ,9,cloudy,Scenic walking bridge,United States,New York,New York,40.7061,-73.9969,friends,"bus,walk"
+London Eye,viewpoint,3500 ,11,cloudy,Riverfront giant wheel,United Kingdom,London,London,51.5033,-0.1195,romantic,"bus,metro,cab"
+Big Ben,viewpoint,1500 ,9,sunny,Iconic Elizabeth Tower clock,United Kingdom,London,London,51.5007,-0.1246,family,"metro,cab"
+Hyde Park,park,10,8,cloudy,Large royal park,United Kingdom,London,London,51.5074,-0.1657,friends,"bus,metro"
+Old Trafford Stadium,viewpoint,4500 ,10,sunny,Manchester United stadium tour,United Kingdom,Manchester,Manchester,53.4631,-2.2913,friends,"bus,tram,cab"
+Manchester Cathedral,temple,500 ,8,any,Historic gothic style church,United Kingdom,Manchester,Manchester,53.4855,-2.2443,family,"bus,tram"
+Eiffel Tower,viewpoint,3000,9,sunny,Iron tower landmark,France,Paris,Paris,48.8584,2.2945,romantic,"metro,cab,bus"
+Louvre Museum,museum,2500,9,any,World’s largest art museum,France,Paris,Paris,48.8606,2.3376,family,"metro,cab"
+Notre Dame Cathedral,temple,1000,8,any,Gothic cathedral,France,Paris,Paris,48.852968,2.349902,family,"bus,walk"
+Tokyo Disneyland,amusement,8500 ,8,sunny,Theme park and rides,Japan,Tokyo,Tokyo,35.6329,139.8804,family,"train,bus"
+Tokyo Skytree,viewpoint,2000,10,sunny,Tall observation tower,Japan,Tokyo,Tokyo,35.7101,139.8107,friends,"metro,cab"
+Shinjuku Gyoen,park,500 ,9,cloudy,Large national garden,Japan,Tokyo,Tokyo,35.6852,139.7100,family,"metro,cab"
+N Seoul Tower,viewpoint,15000,10,cloudy,Romantic viewpoint tower,South Korea,Seoul,Seoul,37.5512,126.9882,romantic,"bus,cable car,cab"
+Gyeongbokgung Palace,viewpoint,3000,9,sunny,Historic palace & museum,South Korea,Seoul,Seoul,37.5796,126.9770,family,"bus,metro"
+Haeundae Beach,viewpoint,0,10,cloudy,Popular beach area,South Korea,Busan,Busan,35.1587,129.1604,friends,"bus,metro"
+Rio Sugarloaf Mountain,viewpoint,1100,9,sunny,Cable car mountain view,Brazil,Rio de Janeiro,Rio de Janeiro,-22.9519,-43.1657,friends,"cable car,cab"
+Copacabana Beach,viewpoint,0,10,cloudy,Famous beach promenade,Brazil,Rio de Janeiro,Rio de Janeiro,-22.9711,-43.1822,friends,"bus,cab"
+CN Tower,viewpoint,350,10,sunny,Observation deck attraction,Canada,Ontario,Toronto,43.6426,-79.3871,friends,"metro,cab"
+Royal Ontario Museum,museum,200 ,9,any,Natural history & culture museum,Canada,Ontario,Toronto,43.6677,-79.3948,family,"metro,bus"
+
