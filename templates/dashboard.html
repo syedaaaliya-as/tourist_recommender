@@ -1,48 +1,150 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+{% set active_page = "dashboard" %}
 {% block content %}
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+<!-- Pastel Background Wrapper -->
+<div class="min-h-screen py-10"
+     style="
+     background-image:url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1600&q=100');
+     background-size:cover;
+     background-position:center;
+     background-attachment:fixed;
+     background-repeat:no-repeat;">
+    
+  <!-- Soft White Blur Overlay -->
+  <div style="background:rgba(255,255,255,0.55); backdrop-filter:blur(6px); padding:20px; border-radius:15px;">
 
-<center>
-  <h3>Tourist Recommendation Dashboard</h3>
+<style>
+  .section-title {
+    background:#d8f6e5;
+    color:#1b804f;
+    padding:10px;
+    font-size:20px;
+    font-weight:700;
+    text-align:center;
+    border-radius:10px;
+    margin-bottom:15px;
+  }
 
-  <div class="card">
+  .page-box {
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:25px;
+    box-shadow:0 8px 18px rgba(0,0,0,0.10);
+  }
 
-    <label>Country</label>
+  .form-group { margin-bottom:10px; }
+
+  .form-group label {
+    font-weight:600;
+    font-size:14px;
+    margin-bottom:4px;
+    display:block;
+  }
+
+  select, input {
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #cfe7db;
+    font-size:14px;
+  }
+
+  .recommend-btn {
+    background:#1b804f;
+    color:white;
+    font-weight:700;
+    padding:12px;
+    border-radius:10px;
+    width:100%;
+    margin-top:8px;
+    border:none;
+    cursor:pointer;
+  }
+
+  .recommend-btn:hover { background:#12633a; }
+
+  #map {
+    height:420px;
+    width:100%;
+    border-radius:15px;
+    background:white;
+  }
+
+  .rec-card {
+    background:white;
+    margin:10px auto;
+    padding:15px;
+    width:90%;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.1);
+  }
+
+  .navigate-btn {
+    margin-top:8px;
+    background:#1b804f;
+    padding:8px 18px;
+    border-radius:8px;
+    border:none;
+    color:white;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+  }
+
+  .navigate-btn:hover { background:#12633a; }
+</style>
+
+
+<div class="page-box">
+  <div class="section-title">Tourist Recommendation Dashboard</div>
+
+  <div class="form-group">
+    <label for="country">Country</label>
     <select id="country"></select>
+  </div>
 
-    <label>State</label>
+  <div class="form-group">
+    <label for="state">State</label>
     <select id="state"></select>
+  </div>
 
-    <label>City</label>
+  <div class="form-group">
+    <label for="city">City</label>
     <select id="city"></select>
+  </div>
 
-    <label>Preferred type</label>
+  <div class="form-group">
+    <label for="type">Preferred Type</label>
     <select id="type">
       <option>park</option>
-      <option>museum</option>
       <option>temple</option>
-      <option>amusement</option>
-      <option>garden</option>
-      <option>viewpoint</option>
-      <option>walk</option>
+      <option>museum</option>
       <option>activity</option>
+      <option>viewpoint</option>
       <option>shopping</option>
-      <option>hike</option>
     </select>
+  </div>
 
-    <label>Average budget per person (approx)</label>
-    <input id="avg_cost" type="number" value="10">
+  <div class="form-group">
+    <label for="avg_cost">Average budget per person (₹)</label>
+    <input id="avg_cost" type="number" value="10" />
+  </div>
 
-    <label>Weather</label>
+  <div class="form-group">
+    <label for="weather">Weather</label>
     <select id="weather">
       <option value="sunny">Sunny</option>
       <option value="rainy">Rainy</option>
       <option value="cloudy">Cloudy</option>
       <option value="snowy">Snowy</option>
     </select>
+  </div>
 
-    <label>Travel Type</label>
+  <div class="form-group">
+    <label for="travel_type">Travel Type</label>
     <select id="travel_type">
       <option value="family">Family</option>
       <option value="solo">Solo</option>
@@ -50,15 +152,19 @@
       <option value="adventure">Adventure</option>
       <option value="spiritual">Spiritual</option>
     </select>
+  </div>
 
-    <label>Budget Level</label>
+  <div class="form-group">
+    <label for="budget_level">Budget Level</label>
     <select id="budget_level">
       <option value="low">Low</option>
       <option value="medium">Medium</option>
       <option value="high">High</option>
     </select>
+  </div>
 
-    <label>Travel Mode</label>
+  <div class="form-group">
+    <label for="travel_mode">Mode of Travel</label>
     <select id="travel_mode">
       <option value="bus">Bus</option>
       <option value="train">Train</option>
@@ -66,66 +172,24 @@
       <option value="cab">Cab</option>
       <option value="metro">Metro</option>
     </select>
-
-    <button class="btn" id="getRecs" style="margin-top:10px;">Get Recommendations</button>
-    <button class="btn" id="getTicket" style="background:#444;margin-top:10px;">Get Ticket Estimate</button>
-
   </div>
 
-  <h3>Results</h3>
+  <button class="recommend-btn" id="getRecs">Get Recommendations</button>
+</div>
+
+<div class="page-box">
+  <div class="section-title">Results</div>
   <div id="results"></div>
+</div>
 
-  <h3>Map</h3>
-  <div id="map" style="height:400px;"></div>
-</center>
+<div class="page-box">
+  <div class="section-title">Map</div>
+  <div id="map"></div>
+</div>
 
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+</div> <!-- overlay end -->
+</div> <!-- bg wrapper end -->
 
-<!-- 🚀 JS script start -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  let userLat = null, userLng = null;
-
-  // Request GPS access
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        userLat = pos.coords.latitude;
-        userLng = pos.coords.longitude;
-        console.log("User location:", userLat, userLng);
-      },
-      err => console.log("GPS access denied")
-    );
-  }
-
-  const btn = document.getElementById("getRecs");
-  
-  btn.addEventListener("click", function () {
-    const payload = {
-      country: document.getElementById("country").value,
-      state: document.getElementById("state").value,
-      city: document.getElementById("city").value,
-      type: document.getElementById("type").value,
-      avg_cost: Number(document.getElementById("avg_cost").value || 10),
-      distance_km: Number(document.getElementById("distance_km").value || 5),
-      open_hour: new Date().getHours(),
-      weather: document.getElementById("weather").value,
-      travel_type: document.getElementById("travel_type").value,
-      budget_level: document.getElementById("budget_level").value,
-      user_lat: userLat,
-      user_lng: userLng
-    };
-
-    fetch("/api/recommend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    })
-      .then(r => r.json())
-      .then(data => console.log(data))
-      .catch(e => console.error("Error", e));
-  });
-});
-</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 
 {% endblock %}

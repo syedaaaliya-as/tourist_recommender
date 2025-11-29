@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   const btn = document.getElementById("getRecs");
-  const ticketBtn = document.getElementById("getTicket");
-  const resultsDiv = document.getElementById("results");
+  const results = document.getElementById("results");
 
   const countrySel = document.getElementById("country");
   const stateSel = document.getElementById("state");
@@ -12,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let userLng = null;
 
   // ============================
-  // 🌍 REQUEST USER LOCATION
+  // 🌍 USER LOCATION ACCESS
   // ============================
   function requestLocation() {
     if (navigator.geolocation) {
@@ -23,20 +22,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
           console.log("📍 User Location:", userLat, userLng);
 
-          map.setView([userLat, userLng], 13);
+          map.setView([userLat, userLng], 12);
           L.marker([userLat, userLng], { title: "You are here" }).addTo(map);
         },
         err => {
-          alert("⚠ Please enable location to calculate real distance.");
+          alert("⚠ Please enable location services.");
           console.warn(err);
         }
       );
     } else {
-      alert("Geolocation not supported");
+      alert("Geolocation not supported by browser");
     }
   }
 
-  // AUTO REQUEST LOCATION ON PAGE LOAD
   requestLocation();
 
   // ============================
@@ -58,44 +56,65 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ============================
-  // 📌 LOAD LOCATION LIST
+  // 📌 LOAD COUNTRY → STATE → CITY
   // ============================
   fetch("/api/locations")
     .then(r => r.json())
     .then(data => {
-      console.log("Location data:", data);
+      console.log("📍 Location Data Loaded", data);
 
-      countrySel.innerHTML = '<option value="">--Select country--</option>';
+      countrySel.innerHTML = '<option value="">-- Select Country --</option>';
       Object.keys(data).sort().forEach(c => {
         countrySel.innerHTML += `<option value="${c}">${c}</option>`;
       });
 
       countrySel.addEventListener("change", () => {
-        stateSel.innerHTML = '<option value="">--Select state--</option>';
-        citySel.innerHTML = '<option value="">--Select city--</option>';
+        stateSel.innerHTML = '<option value="">-- Select State --</option>';
+        citySel.innerHTML = '<option value="">-- Select City --</option>';
         const country = countrySel.value;
-        if (!country) return;
-
         Object.keys(data[country]).sort().forEach(s => {
           stateSel.innerHTML += `<option value="${s}">${s}</option>`;
         });
       });
 
       stateSel.addEventListener("change", () => {
+        citySel.innerHTML = '<option value="">-- Select City --</option>';
         const country = countrySel.value;
         const state = stateSel.value;
-        citySel.innerHTML = '<option value="">--Select city--</option>';
-        if (!country || !state) return;
-
         data[country][state].forEach(city => {
           citySel.innerHTML += `<option value="${city}">${city}</option>`;
         });
       });
     })
-    .catch(err => console.error("Fetch error:", err));
+    .catch(err => console.error("❌ LOCATION LOAD ERROR", err));
 
   // ============================
-  // 📍 SHOW RESULTS ON MAP
+  // ✨ RESULT CARD STYLING
+  // ============================
+  function displayResults(data) {
+    results.innerHTML = `
+      <h3 style="text-align:center; font-size:22px; font-weight:700; margin-bottom:12px;">
+        Top Recommendations
+      </h3>
+    `;
+
+    data.results.forEach(r => {
+      results.innerHTML += `
+        <div class="rec-card">
+          <strong style="font-size:18px;">${r.name}</strong> — ${r.type}<br/>
+          <span>Cost: ₹${r.avg_cost} | Distance: ${r.real_distance.toFixed(2)} km</span><br/>
+
+          <button class="navigate-btn"
+            onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}', '_blank')">
+            Navigate
+          </button>
+        </div>
+      `;
+    });
+  }
+
+  // ============================
+  // 🗺 DISPLAY MARKERS ON MAP
   // ============================
   function showOnMap(results) {
     clearMarkers();
@@ -115,10 +134,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ============================
-  // ✨ SEND RECOMMEND REQUEST
+  // 🎯 REQUEST RECOMMENDATIONS
   // ============================
   async function sendRec(payload) {
-    resultsDiv.innerHTML = "<p>Loading...</p>";
+    results.innerHTML = "<p style='text-align:center;'>Loading...</p>";
 
     const resp = await fetch("/api/recommend", {
       method: "POST",
@@ -127,34 +146,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const data = await resp.json();
-    console.log("Recommendation data:", data);
+    console.log("✨ Recommendation Response:", data);
 
     if (!data.results || !data.results.length) {
-      resultsDiv.innerHTML = "<p>No results found</p>";
+      results.innerHTML = "<p style='text-align:center;'>No results found</p>";
       return;
     }
 
-    let html = "<h3>Top Recommendations</h3>";
-    data.results.forEach(r => {
-      html += `
-        <div class="rec-card">
-          <strong>${r.name}</strong> — ${r.type}<br/>
-          Cost: ₹${r.avg_cost} | Distance: ${r.real_distance.toFixed(2)} km<br/>
-          <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}','_blank')">Navigate</button>
-        </div>
-      `;
-    });
-
-    resultsDiv.innerHTML = html;
+    displayResults(data);
     showOnMap(data.results);
   }
 
   // ============================
-  // 🎯 BUTTON ACTION
+  // 🟢 BUTTON CLICK
   // ============================
   btn.addEventListener("click", () => {
     if (!userLat || !userLng) {
-      alert("Enable location and try again!");
+      alert("Please enable location first.");
       return;
     }
 
@@ -164,6 +172,10 @@ document.addEventListener("DOMContentLoaded", function () {
       city: citySel.value,
       type: document.getElementById("type").value,
       avg_cost: Number(document.getElementById("avg_cost").value),
+      weather: document.getElementById("weather").value,
+      travel_type: document.getElementById("travel_type").value,
+      budget_level: document.getElementById("budget_level").value,
+      travel_mode: document.getElementById("travel_mode").value,
       user_lat: userLat,
       user_lng: userLng,
     });

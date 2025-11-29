@@ -1,99 +1,117 @@
-<!-- templates/base.html -->
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Tourist Recommender Prototype</title>
+  <title>Tourist Recommender</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Leaflet (MAP) CSS -->
-  <link 
-    rel="stylesheet" 
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <!-- Fonts + Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      margin: 20px; 
-      max-width: 1000px;
+    body { font-family: "Poppins", sans-serif; background: #D2EAF3; }
+
+    /* Active Link Style */
+    .active-link {
+      color:#4ade80 !important;
+      font-weight:700;
+      border-bottom:2px solid #4ade80;
+      padding-bottom:2px;
     }
-    header { 
-      display:flex; 
-      justify-content:space-between; 
-      align-items:center; 
-      margin-bottom: 20px;
-    }
-    .card { 
-      border:1px solid #ddd; 
-      padding:16px; 
-      border-radius:8px; 
-      margin:12px 0; 
-      background: #fafafa;
-    }
-    .btn { 
-      padding:8px 12px; 
-      border-radius:6px; 
-      text-decoration:none; 
-      background:#2d89ef; 
-      color:white;
-      cursor: pointer;
-      border: none;
-    }
-    input, select { 
-      padding:8px; 
-      width:100%; 
-      margin:6px 0 12px 0; 
-      border-radius: 4px;
-      border: 1px solid #aaa;
-    }
-    #map {
-      width: 100%;
-      height: 350px;
-      margin-top: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+
+    nav a:hover { color:#4ade80; }
+
+    header {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h2>Tourist Recommender</h2>
-    <nav>
-      {% if session.username %}
-        Hello, {{ session.username }} |
-        <a href="{{ url_for('logout') }}">Logout</a>
-      {% else %}
-        <a href="{{ url_for('login') }}">Login</a> |
-        <a href="{{ url_for('register') }}">Register</a>
-      {% endif %}
-    </nav>
-  </header>
 
-  <main>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div>
-          {% for cat, msg in messages %}
-            <div style="padding:8px; margin:6px 0; border-radius:6px; background:#e7f0ff;">
-              {{ msg }}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
+<!-- ================== NAVBAR ================== -->
+<header class="w-full bg-[#0f2b27] py-4 px-6 flex items-center justify-between sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="h-20">
+    <span class="text-2xl font-bold text-white">       Tourist Recommender</span>
+  </div>
 
-    {% block content %}{% endblock %}
-  </main>
+  <nav class="flex gap-8 text-lg  font-medium text-gray-300">
+    <a class="{{ 'active-link' if request.path=='/home' else '' }}" href="{{ url_for('home') }}">Home</a>
+    <a class="{{ 'active-link' if request.path=='/dashboard' else '' }}" href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a class="{{ 'active-link' if request.path=='/about' else '' }}" href="{{ url_for('about') }}">About</a>
+    <a class="{{ 'active-link' if request.path=='/services' else '' }}" href="{{ url_for('services') }}">Services</a>
+    <a class="{{ 'active-link' if request.path=='/contact' else '' }}" href="{{ url_for('contact') }}">Contact</a>
+  </nav>
 
-  <!-- Leaflet JS (Map) -->
-  <script 
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-  </script>
+  <div class="text-gray-300">
+    {% if session.username %}
+      <span>Hello, {{ session.username }}</span> |
+      <a href="{{ url_for('logout') }}" class="text-[#4ade80] font-semibold hover:underline">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}" class="text-[#4ade80] hover:underline">Login</a> |
+      <a href="{{ url_for('register') }}" class="text-[#4ade80] hover:underline">Register</a>
+    {% endif %}
+  </div>
+</header>
 
-  <!-- Your main frontend logic -->
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+<!-- ================== PAGE BODY ================== -->
+<main class="max-w-6xl mx-auto mt-10 mb-16">
+  {% block content %}{% endblock %}
+</main>
+
+
+<!-- ================== FOOTER ================== -->
+<footer class="bg-black text-gray-300 py-10">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 px-6">
+
+    <div>
+      <h3 class="text-white font-bold text-xl">Tourist's Choice</h3>
+      <p class="text-sm mt-3">Explore smarter with personalized suggestions based on your interests and real-time travel context.</p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-3">Quick Links</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('home') }}" class="hover:text-white">Home</a></li>
+        <li><a href="{{ url_for('about') }}" class="hover:text-white">About</a></li>
+        <li><a href="{{ url_for('services') }}" class="hover:text-white">Services</a></li>
+        <li><a href="{{ url_for('contact') }}" class="hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-3">Support</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('privacy') }}" class="hover:text-white">Privacy Policy</a></li>
+        <li><a href="{{ url_for('terms') }}" class="hover:text-white">Terms & Conditions</a></li>
+        <li><a href="{{ url_for('help') }}" class="hover:text-white">Help Center</a></li>
+        <li><a href="{{ url_for('feedback') }}" class="hover:text-white">Feedback</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-3">Follow Us</h4>
+      <div class="flex gap-4 text-xl">
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-youtube"></i>
+      </div>
+      <button class="mt-5 bg-pink-600 hover:bg-pink-700 px-6 py-2 text-white rounded-full">Contact Us</button>
+    </div>
+  </div>
+
+  <p class="text-center text-gray-400 mt-6">© 2025 Tourist’s Choice. All Rights Reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </body>
 </html>
