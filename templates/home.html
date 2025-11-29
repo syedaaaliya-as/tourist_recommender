@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+{% block content %}
+
+<!-- HERO SECTION WITH BACKGROUND -->
+<section class="relative h-[80vh] flex items-center justify-center bg-cover bg-center"
+  style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');">
+
+  <!-- overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-45"></div>
+
+  <div class="relative z-10 text-center text-white px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold drop-shadow-lg">Discover the World</h1>
+    <p class="text-lg md:text-xl mt-3 font-medium drop-shadow-lg">Adventure Awaits — Start Your Journey</p>
+
+    <a href="{{ url_for('dashboard') }}">
+      <button class="mt-6 px-10 py-3 bg-[#1e9464] hover:bg-[#147349] shadow-xl rounded-xl font-semibold">
+        Start Exploring
+      </button>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURE CARDS -->
+<section class="max-w-6xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+  <div class="bg-white shadow-md rounded-xl p-6">
+    <h3 class="text-xl font-bold text-[#1e9464] mb-2">Personalized Suggestions</h3>
+    <p class="text-gray-600 text-sm">Recommendations based on weather, travel type, budget & real-time data.</p>
+  </div>
+
+  <div class="bg-white shadow-md rounded-xl p-6">
+    <h3 class="text-xl font-bold text-[#1e9464] mb-2">Smart Distance Calculation</h3>
+    <p class="text-gray-600 text-sm">Get nearest destinations with map-based distance estimation.</p>
+  </div>
+
+  <div class="bg-white shadow-md rounded-xl p-6">
+    <h3 class="text-xl font-bold text-[#1e9464] mb-2">Ticket Cost Estimation</h3>
+    <p class="text-gray-600 text-sm">Instant travel mode cost comparison for smarter planning.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="text-center mt-16 mb-10">
+  <h2 class="text-3xl font-bold text-[#1e9464] mb-4">Ready to Get Your Travel Plans?</h2>
+  <a href="{{ url_for('dashboard') }}">
+    <button class="primary-btn">Go to Dashboard</button>
+  </a>
+</section>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% set active_page="services" %}
+{% block content %}
+
+<section class="relative bg-cover bg-center min-h-screen flex items-center justify-center py-16 px-6"
+  style="background-image: url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1600&q=80');">
+
+  <!-- Dark overlay to highlight text -->
+  <div class="absolute inset-0 bg-black bg-opacity-45"></div>
+
+  <!-- CONTENT CARD -->
+  <div class="relative z-10 max-w-6xl mx-auto bg-white bg-opacity-95 backdrop-blur-md rounded-2xl shadow-2xl p-10">
+    
+    <h1 class="text-4xl font-extrabold text-green-700 text-center mb-10">
+      Our Services
+    </h1>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="bg-white shadow-lg rounded-xl p-6 text-center hover:scale-105 transition">
+        <h2 class="text-xl font-bold mb-3 text-green-700">Travel Suggestions</h2>
+        <p class="text-gray-700 text-sm">Smart recommendations based on real-time user preferences.</p>
+      </div>
+
+      <div class="bg-white shadow-lg rounded-xl p-6 text-center hover:scale-105 transition">
+        <h2 class="text-xl font-bold mb-3 text-green-700">Map Navigation</h2>
+        <p class="text-gray-700 text-sm">View live routes and distances directly from your location.</p>
+      </div>
+
+      <div class="bg-white shadow-lg rounded-xl p-6 text-center hover:scale-105 transition">
+        <h2 class="text-xl font-bold mb-3 text-green-700">Budget Planning</h2>
+        <p class="text-gray-700 text-sm">Plan trips within your budget based on estimated travel costs.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% set active_page = "about" %}
+{% block content %}
+
+<section class="relative bg-cover bg-center min-h-screen flex items-center justify-center"
+  style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80');">
+
+  <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6">
+    <h1 class="text-5xl font-extrabold text-white text-center mb-10 drop-shadow-lg">
+      About Us
+    </h1>
+
+    <div class="grid md:grid-cols-2 gap-10 items-center bg-white bg-opacity-95 backdrop-blur-md p-10 rounded-2xl shadow-xl">
+      <img 
+        src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=900&q=80"
+        class="rounded-xl shadow-lg"
+      />
+
+      <div>
+        <p class="text-lg text-gray-700 leading-8 mb-4">
+          Tourist Recommender is an intelligent travel companion designed to help travelers explore the best destinations
+          based on preferences and real-time context such as weather, budget, and location.
+        </p>
+        <p class="text-lg text-gray-700 leading-8 mb-4">
+          Our mission is to make travel planning stress-free, personalized, and smart using data-driven recommendations.
+        </p>
+        <p class="text-lg text-gray-700 leading-8 font-semibold">
+          Built with by passionate developers, we aim to turn your travel dreams into reality. For any further queries please do contact us from the panel where you can drop us a mail regarding your query.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
