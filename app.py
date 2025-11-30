@@ -137,8 +137,8 @@ def forgot_password():
 
         msg.html = f"""
         <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; background: #ffffff; border-radius: 10px;">
-            <h2 style="color: #2c3e50; text-align: center;">Please verify your identity</h2>
-            <p style="font-size: 16px; color: #555;">Here is your password reset verification code:</p>
+            <h2 style="color: #2c3e50; text-align: center;">Please verify your identity, {user.username} </h2>
+            <p style="font-size: 16px; color: #555; text-align: center">Here is your password reset verification code:</p>
 
             <div style="font-size: 40px; font-weight: bold; letter-spacing: 6px; text-align: center; margin: 20px 0; color: #2ecc71;">
                 {otp}
