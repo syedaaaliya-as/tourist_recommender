@@ -60,6 +60,14 @@ def help():
 def feedback():
     return render_template("feedback.html")
 
+# ---------------- PROFILE PAGE ----------------
+@app.route("/profile")
+def profile():
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+    user = db.query(User).filter(User.id == session.get("user_id")).first()
+    return render_template("profile.html", user=user)
+
 # ---------------- REGISTER ----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -68,6 +76,13 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
 
+        # Check existing email
+        existing_user = db.query(User).filter(User.email == email).first()
+        if existing_user:
+            flash("Email already registered!", "error")
+            return redirect(url_for("register"))
+
+        # Save new user
         hashed = generate_password_hash(password)
         user = User(username=username, email=email, password=hashed)
         db.add(user)
@@ -124,14 +139,11 @@ def forgot_password():
             <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; background: #ffffff; border-radius: 10px;">
                 <h2 style="color: #2c3e50; text-align: center;">Please verify your identity, {user.username}</h2>
                 <p style="font-size: 16px; color: #555; text-align: center;">Here is your password reset verification code:</p>
-
                 <div style="font-size: 40px; font-weight: bold; letter-spacing: 6px; text-align: center; margin: 20px 0; color: #2ecc71;">
                     {otp}
                 </div>
-
                 <p style="font-size: 14px; color: #888;">This code is valid for <strong>10 minutes</strong> and can only be used once.</p>
                 <p style="font-size: 14px; color: #777;">If you didn’t request this, please ignore this email.</p>
-
                 <br>
                 <p style="font-size: 15px; color: #444;">Thank you,<br><strong>Tourist Recommender Team</strong></p>
             </div>
