@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.page-box {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    font-family: "Segoe UI", sans-serif;
+}
+.page-box h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+}
+.page-box h3 {
+    color: #e91e63;
+    font-size: 22px;
+    margin-top: 30px;
+}
+.page-box p, .page-box li {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.7;
+}
+.highlight {
+    background: #f3e5f5;
+    padding: 12px 18px;
+    border-left: 5px solid #9c27b0;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+</style>
+
+<div class="page-box">
+
+    <h1>Terms & Conditions</h1>
+
+    <p>
+        Welcome to <strong>Tourist’s Choice</strong>. By using our tourist recommendation system,
+        you agree to follow the terms and conditions listed below. Please read them carefully.
+    </p>
+
+    <h3>Use of Service</h3>
+    <ul>
+        <li>You must provide accurate registration information.</li>
+        <li>You agree not to misuse the platform or perform unauthorized access.</li>
+        <li>Recommendations are generated using machine learning and may vary in accuracy.</li>
+    </ul>
+
+    <h3>Ownership & Restrictions</h3>
+    <ul>
+        <li>All system content and ML models belong to Tourist’s Choice.</li>
+        <li>You may not copy, modify, or redistribute system components without permission.</li>
+    </ul>
+
+    <h3>Limitation of Liability</h3>
+    <p>
+        Tourist’s Choice offers travel recommendations for informational purposes only.  
+        We are not responsible for travel decisions, bookings, or risks involved during your trip.
+    </p>
+
+    <div class="highlight">
+        By continuing to use our services, you agree to follow these terms and conditions.
+    </div>
+
+</div>
+
+{% endblock %}

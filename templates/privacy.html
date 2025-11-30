@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.privacy-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    font-family: "Segoe UI", sans-serif;
+}
+
+.privacy-container h1 {
+    font-size: 34px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.privacy-container h3 {
+    margin-top: 35px;
+    font-size: 22px;
+    color: #e91e63;
+    font-weight: 600;
+}
+
+.privacy-container p, 
+.privacy-container li {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444;
+}
+
+.privacy-container ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.privacy-container li {
+    margin-bottom: 8px;
+}
+
+.highlight-box {
+    background: #fce4ec;
+    padding: 12px 18px;
+    border-left: 5px solid #e91e63;
+    border-radius: 8px;
+    margin-top: 30px;
+    font-weight: 500;
+}
+</style>
+
+<div class="privacy-container">
+
+    <h1>Privacy Policy</h1>
+
+    <p>
+        At <strong>Tourist’s Choice</strong>, your privacy is our top priority.  
+        We are committed to safeguarding your personal data and ensuring a safe, transparent, 
+        and user-friendly experience while using our tourist recommendation system.
+    </p>
+
+    <h3>Information We Collect</h3>
+    <ul>
+        <li>Basic details such as name, username, and email (provided during registration).</li>
+        <li>Your selected interests, travel preferences, and context information.</li>
+        <li>Search behavior, activity logs, and browsing patterns to improve recommendations.</li>
+        <li>Device information, browser type, and usage analytics for service optimization.</li>
+    </ul>
+
+    <h3>How We Use Your Information</h3>
+    <ul>
+        <li>To generate personalized and context-aware travel recommendations.</li>
+        <li>To improve the accuracy and performance of our ML-based recommendation engine.</li>
+        <li>To enhance website features, user experience, and overall system functionality.</li>
+        <li>To notify users about updates, new features, or important service alerts.</li>
+    </ul>
+
+    <h3>Data Security</h3>
+    <p>
+        We implement strong security practices including encryption, secure servers, 
+        password hashing, role-based access control, and continuous monitoring to ensure
+        the protection of your data.
+    </p>
+
+    <div class="highlight-box">
+        Your personal information is <strong>never sold, rented, or shared</strong> with any third party.
+        It is used strictly for improving your travel experience.
+    </div>
+
+    <p style="margin-top: 30px;">
+        For any privacy-related questions or concerns, feel free to reach out to our support team anytime.
+    </p>
+
+</div>
+
+{% endblock %}

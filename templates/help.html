@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.help-box {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    font-family: "Segoe UI", sans-serif;
+}
+.help-box h1 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+}
+.help-section {
+    margin-top: 25px;
+}
+.help-section h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #e91e63;
+}
+.help-box p, .help-box li {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.7;
+}
+.help-box ul {
+    margin-left: 20px;
+}
+.faq-box {
+    background: #e3f2fd;
+    padding: 14px 20px;
+    border-radius: 8px;
+    border-left: 5px solid #2196f3;
+    margin-top: 20px;
+}
+</style>
+
+<div class="help-box">
+
+    <h1>Help Center</h1>
+
+    <div class="help-section">
+        <h3>1. How does the recommendation system work?</h3>
+        <p>
+            Our ML model analyzes your preferences, weather, travel patterns, and real-time context
+            to generate personalized tourist recommendations.
+        </p>
+    </div>
+
+    <div class="help-section">
+        <h3>2. Why do recommendations change?</h3>
+        <p>
+            Recommendations vary based on season, time, updated datasets, and new model improvements.
+        </p>
+    </div>
+
+    <div class="help-section">
+        <h3>3. Troubleshooting</h3>
+        <ul>
+            <li>Refresh the page if results take long to load.</li>
+            <li>Check your internet connection.</li>
+            <li>Try logging in again if the dashboard doesn’t update.</li>
+        </ul>
+    </div>
+
+    <div class="faq-box">
+        Need help? Contact our support team at  
+        <strong>support@touristschoice.com</strong>
+    </div>
+
+</div>
+
+{% endblock %}

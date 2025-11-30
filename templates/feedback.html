@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.feedback-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    font-family: "Segoe UI", sans-serif;
+}
+.feedback-container h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+.feedback-container p {
+    text-align: center;
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+.feedback-container textarea {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    resize: vertical;
+}
+.feedback-container textarea:focus {
+    border-color: #e91e63;
+}
+.feedback-container button {
+    margin-top: 20px;
+    width: 100%;
+    background: #e91e63;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.feedback-container button:hover {
+    background: #c2185b;
+}
+</style>
+
+<div class="feedback-container">
+
+    <h1>Feedback</h1>
+
+    <p>We’d love to hear your thoughts about Tourist’s Choice!</p>
+
+    <form method="POST">
+        <textarea name="feedback" rows="6" placeholder="Share your experience..."></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+</div>
+
+{% endblock %}
