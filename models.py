@@ -10,6 +10,7 @@ engine = create_engine(f"sqlite:///{DB_PATH}", connect_args={"check_same_thread"
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
+
 class User(Base):
     __tablename__ = "users"
 
@@ -22,9 +23,13 @@ class User(Base):
     pref_travel_type = Column(String(50), nullable=True)
     pref_budget = Column(String(50), nullable=True)
 
-    # OTP fields
+    # Optional OTP Database storage (currently not used in session-based OTP)
     otp = Column(String(6), nullable=True)
     otp_expiry = Column(DateTime, nullable=True)
+
+    def __repr__(self):
+        return f"<User(username={self.username}, email={self.email})>"
+
 
 def init_db():
     Base.metadata.create_all(bind=engine)

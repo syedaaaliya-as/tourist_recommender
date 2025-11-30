@@ -2,29 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from models import init_db, SessionLocal, User
 from recommender import Recommender
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_mail import Mail, Message
 import pandas as pd
 import random
 import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail as SGMail
 
 app = Flask(__name__)
 app.secret_key = "dev-secret"
-
-# ---------------- EMAIL CONFIG ----------------
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = "syedaaaliya01@gmail.com"   # YOUR EMAIL
-app.config['MAIL_PASSWORD'] = "tmwj bgct uscf vwml"            # APP PASSWORD
-
-mail = Mail(app)
 
 # ---------------- DATABASE INIT ----------------
 init_db()
 db = SessionLocal()
 recommender = Recommender()
 DATA_PATH = os.path.join(os.path.dirname(__file__), "dataset.csv")
-
 
 # ---------------- MAIN ROUTES ----------------
 @app.route("/")
@@ -69,7 +60,6 @@ def help():
 def feedback():
     return render_template("feedback.html")
 
-
 # ---------------- REGISTER ----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -87,7 +77,6 @@ def register():
         return redirect(url_for("login"))
 
     return render_template("register.html")
-
 
 # ---------------- LOGIN ----------------
 @app.route("/login", methods=["GET", "POST"])
@@ -107,12 +96,10 @@ def login():
 
     return render_template("login.html")
 
-
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("login"))
-
 
 # ---------------- FORGOT PASSWORD + OTP ----------------
 @app.route("/forgot-password", methods=["GET", "POST"])
@@ -129,37 +116,40 @@ def forgot_password():
         session["reset_email"] = email
         session["otp"] = otp
 
-        msg = Message(
-            "Verify Your Identity - Tourist Recommender",
-            sender=app.config['MAIL_USERNAME'],
-            recipients=[email]
+        message = SGMail(
+            from_email="Tourist Recommender <syedaaaliya01@gmail.com>",
+            to_emails=email,
+            subject="Verify Your Identity - Tourist Recommender",
+            html_content=f"""
+            <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; background: #ffffff; border-radius: 10px;">
+                <h2 style="color: #2c3e50; text-align: center;">Please verify your identity, {user.username}</h2>
+                <p style="font-size: 16px; color: #555; text-align: center;">Here is your password reset verification code:</p>
+
+                <div style="font-size: 40px; font-weight: bold; letter-spacing: 6px; text-align: center; margin: 20px 0; color: #2ecc71;">
+                    {otp}
+                </div>
+
+                <p style="font-size: 14px; color: #888;">This code is valid for <strong>10 minutes</strong> and can only be used once.</p>
+                <p style="font-size: 14px; color: #777;">If you didn’t request this, please ignore this email.</p>
+
+                <br>
+                <p style="font-size: 15px; color: #444;">Thank you,<br><strong>Tourist Recommender Team</strong></p>
+            </div>
+            """
         )
 
-        msg.html = f"""
-        <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; background: #ffffff; border-radius: 10px;">
-            <h2 style="color: #2c3e50; text-align: center;">Please verify your identity, {user.username} </h2>
-            <p style="font-size: 16px; color: #555; text-align: center">Here is your password reset verification code:</p>
-
-            <div style="font-size: 40px; font-weight: bold; letter-spacing: 6px; text-align: center; margin: 20px 0; color: #2ecc71;">
-                {otp}
-            </div>
-
-            <p style="font-size: 14px; color: #888;">This code is valid for <strong>10 minutes</strong> and can only be used once.</p>
-            <p style="font-size: 14px; color: #777;">If you didn’t request this, please ignore this email.</p>
-
-            <br>
-            <p style="font-size: 15px; color: #444;">Thank you,<br><strong>Tourist Recommender Team</strong></p>
-        </div>
-        """
-
-        mail.send(msg)
-
-        flash("OTP has been sent to your email!", "success")
-        return redirect(url_for("verify_otp"))
+        try:
+            sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
+            sg.send(message)
+            flash("OTP has been sent to your email!", "success")
+            return redirect(url_for("verify_otp"))
+        except Exception as e:
+            print(str(e))
+            flash("Failed to send OTP. Please try again.", "error")
 
     return render_template("forgot_password.html")
 
-
+# ---------------- OTP VERIFICATION ----------------
 @app.route("/verify-otp", methods=["GET", "POST"])
 def verify_otp():
     if request.method == "POST":
@@ -172,12 +162,17 @@ def verify_otp():
 
     return render_template("verify_otp.html")
 
-
+# ---------------- RESET PASSWORD ----------------
 @app.route("/reset-password", methods=["GET", "POST"])
 def reset_password():
     if request.method == "POST":
         new_password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
         email = session.get("reset_email")
+
+        if new_password != confirm_password:
+            flash("Passwords do not match!", "error")
+            return redirect(url_for("reset_password"))
 
         user = db.query(User).filter(User.email == email).first()
 
@@ -193,7 +188,6 @@ def reset_password():
 
     return render_template("reset_password.html")
 
-
 # ---------------- API ROUTES ----------------
 @app.route("/api/locations")
 def api_locations():
@@ -204,13 +198,11 @@ def api_locations():
         data.setdefault(r["country"], {}).setdefault(r["state"], set()).add(r["city"])
     return jsonify({c: {s: list(ct) for s, ct in st.items()} for c, st in data.items()})
 
-
 @app.route("/api/recommend", methods=["POST"])
 def api_recommend():
     data = request.json or {}
     results = recommender.recommend(data, top_k=5)
     return jsonify({"results": results})
-
 
 if __name__ == "__main__":
     app.run(debug=True)
